@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RevGuard — Live Demo | Adams RevOps Portfolio</title>
+<meta name="description" content="Run a real test lead through RevGuard's live scoring pipeline and watch it get stamped Auto-Qualified, Nurture, or Disqualified." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12182A; --ink-soft:#1B2338; --rule:#2A3450;
+    --paper:#ECE7D8; --paper-line:#C9C2AC; --paper-ink:#12182A;
+    --brass:#9C7A3C; --muted:#8B93A8; --body-on-ink:#B7BECF;
+    --green:#2F6B4F; --amber:#93692B; --red:#A23B2E;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--ink); color:var(--body-on-ink); font-family:'IBM Plex Sans',sans-serif; line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{border-bottom:1px solid var(--rule);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:var(--max); margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); text-decoration:none;}
+  .brand .mark{width:34px; height:34px; border:2px solid var(--brass); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--brass); font-size:11px; font-weight:700;}
+  .back-link{font-size:13.5px; text-decoration:none; color:var(--body-on-ink);}
+
+  main{padding:56px 0 80px;}
+  .eyebrow{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); margin-bottom:14px;}
+  h1{font-family:'Special Elite',monospace; font-size:clamp(28px,4.4vw,42px); color:var(--paper); margin:0 0 16px; line-height:1.15;}
+  .lede{font-size:16px; max-width:620px; color:var(--body-on-ink); margin:0 0 40px;}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:860px){ .grid{grid-template-columns:1fr;} }
+
+  .ledger{background:var(--paper); border:1px solid var(--paper-line); border-radius:4px; color:var(--paper-ink); overflow:hidden;}
+  .ledger-head{padding:18px 20px; border-bottom:1px solid var(--paper-line);}
+  .ledger-head .label{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--brass); display:block; margin-bottom:12px;}
+  .lead-picker{display:flex; flex-wrap:wrap; gap:8px;}
+  .lead-btn{font-family:'IBM Plex Sans',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border:1px solid var(--paper-line); background:transparent; color:var(--paper-ink); border-radius:3px; cursor:pointer;}
+  .lead-btn.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .ledger-row{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:13px 20px; border-bottom:1px solid var(--paper-line); font-size:13.5px;}
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row .k{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--brass); white-space:nowrap;}
+  .ledger-row .v{text-align:right;}
+
+  .pipeline-card{border:1px solid var(--rule); border-radius:4px; background:var(--ink-soft); overflow:hidden;}
+  .pipeline-head{padding:18px 20px; border-bottom:1px solid var(--rule); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .pipeline-head .label{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--brass);}
+  .run-btn{font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:700; padding:10px 18px; background:var(--paper); color:var(--ink); border:none; border-radius:3px; cursor:pointer;}
+  .run-btn:disabled{opacity:.5; cursor:default;}
+  .stages{display:flex; align-items:center; gap:6px; padding:16px 20px; flex-wrap:wrap;}
+  .stage{font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; padding:5px 9px; border:1px solid var(--rule); border-radius:3px; color:var(--muted);}
+  .stage.active{border-color:var(--brass); background:#DFD8BE1a; color:var(--paper);}
+  .stage-line{flex:1; height:1px; background:var(--rule); min-width:12px;}
+  .stage-line.active{background:var(--brass);}
+
+  .result-area{min-height:240px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; padding:32px 20px;}
+  .placeholder{font-size:13.5px; color:var(--muted); text-align:center; max-width:320px;}
+  .running-text{font-family:'JetBrains Mono',monospace; font-size:13.5px; color:var(--brass);}
+  .stamp{width:180px; height:180px; border-radius:50%; border:3px solid; display:flex; align-items:center; justify-content:center; text-align:center; transform:rotate(-7deg); font-family:'Special Elite',monospace; font-weight:700; letter-spacing:.1em; font-size:14px; padding:0 16px;}
+  .score-line{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--paper);}
+  .reason{font-size:12.5px; color:var(--body-on-ink); text-align:center; max-width:340px;}
+
+  .back-cta{margin-top:52px; text-align:center;}
+  .back-cta a{font-size:13.5px; text-decoration:none; color:var(--muted); border-bottom:1px solid var(--rule); padding-bottom:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="revguard.html"><span class="mark">RG</span> RevGuard</a>
+    <a class="back-link" href="revguard.html">&larr; Back to case study</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="eyebrow">Live Demo</div>
+    <h1>Run a lead through the ledger.</h1>
+    <p class="lede">Pick one of three real test leads from the build, then run it through the exact pipeline RevGuard uses in production: intake, BANT scoring, and the qualification gate. The stamp you see is the same logic making the same decision it made live.</p>
+
+    <div class="grid">
+      <div class="ledger">
+        <div class="ledger-head">
+          <span class="label">Choose a submitted lead</span>
+          <div class="lead-picker" id="leadPicker"></div>
+        </div>
+        <div id="leadFacts"></div>
+      </div>
+
+      <div class="pipeline-card">
+        <div class="pipeline-head">
+          <span class="label">RevGuard pipeline</span>
+          <button class="run-btn" id="runBtn">Run through RevGuard</button>
+        </div>
+        <div class="stages" id="stages"></div>
+        <div class="result-area" id="resultArea">
+          <p class="placeholder">Select a lead, then run it through intake, validation, BANT scoring, and the qualification gate.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="back-cta">
+      <a href="revguard.html">&larr; Read the full architecture and build evidence</a>
+    </div>
+  </div>
+</main>
+
+<script>
+const LEADS = [
+  {
+    id: "brightfield",
+    name: "Nadia Okonkwo-Reyes, VP of Sales",
+    company: "Brightfield Partners",
+    budget: "$50k+",
+    authority: "I decide",
+    need: "Reps mark deals qualified with zero verification — forecasts keep missing.",
+    timeline: "This month",
+    scores: { budget: 25, authority: 25, need: 22, timeline: 23 }
+  },
+  {
+    id: "corvantia",
+    name: "Marcus Feldstein, Sales Manager",
+    company: "Corvantia Group",
+    budget: "$10k–$50k",
+    authority: "I influence, others decide",
+    need: "Looking into better ways to track deal progress, haven't scoped it yet.",
+    timeline: "This quarter",
+    scores: { budget: 15, authority: 15, need: 14, timeline: 12 }
+  },
+  {
+    id: "quicklook",
+    name: "Ariel Sun, Marketing Intern",
+    company: "Quicklook Ventures",
+    budget: "Not sure yet",
+    authority: "Just researching",
+    need: "Just curious what tools are out there.",
+    timeline: "Just researching",
+    scores: { budget: 5, authority: 5, need: 4, timeline: 3 }
+  }
+];
+
+const STAGES = ["Intake", "Validate", "Score", "Gate", "Stamp"];
+const STAMP_COLORS = {
+  "AUTO-QUALIFIED": "#2F6B4F",
+  "NURTURE": "#93692B",
+  "DISQUALIFIED": "#A23B2E"
+};
+const STAMP_REASON = {
+  "AUTO-QUALIFIED": "Total score cleared the 70-point threshold. A deal was created in the Qualification stage.",
+  "NURTURE": "Total score landed between 40 and 69. Contact created, routed to nurture — no deal yet.",
+  "DISQUALIFIED": "Total score came in under 40. Contact logged and flagged, not discarded."
+};
+
+let selectedId = LEADS[0].id;
+let running = false;
+
+function totalOf(scores){ return scores.budget + scores.authority + scores.need + scores.timeline; }
+function statusOf(total){
+  if (total >= 70) return "AUTO-QUALIFIED";
+  if (total >= 40) return "NURTURE";
+  return "DISQUALIFIED";
+}
+
+function renderPicker(){
+  const el = document.getElementById("leadPicker");
+  el.innerHTML = "";
+  LEADS.forEach(l => {
+    const btn = document.createElement("button");
+    btn.className = "lead-btn" + (l.id === selectedId ? " active" : "");
+    btn.textContent = l.company;
+    btn.onclick = () => { selectedId = l.id; renderPicker(); renderFacts(); resetResult(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderFacts(){
+  const lead = LEADS.find(l => l.id === selectedId);
+  const el = document.getElementById("leadFacts");
+  el.innerHTML = `
+    <div class="ledger-row"><span class="k">Contact</span><span class="v">${lead.name}</span></div>
+    <div class="ledger-row"><span class="k">Budget stated</span><span class="v mono">${lead.budget}</span></div>
+    <div class="ledger-row"><span class="k">Authority stated</span><span class="v mono">${lead.authority}</span></div>
+    <div class="ledger-row"><span class="k">Need described</span><span class="v">${lead.need}</span></div>
+    <div class="ledger-row"><span class="k">Timeline stated</span><span class="v mono">${lead.timeline}</span></div>
+  `;
+}
+
+function renderStages(activeIndex){
+  const el = document.getElementById("stages");
+  el.innerHTML = "";
+  STAGES.forEach((s, idx) => {
+    const stage = document.createElement("span");
+    stage.className = "stage" + (idx <= activeIndex ? " active" : "");
+    stage.textContent = s;
+    el.appendChild(stage);
+    if (idx < STAGES.length - 1){
+      const line = document.createElement("span");
+      line.className = "stage-line" + (idx < activeIndex ? " active" : "");
+      el.appendChild(line);
+    }
+  });
+}
+
+function resetResult(){
+  renderStages(-1);
+  document.getElementById("resultArea").innerHTML =
+    '<p class="placeholder">Select a lead, then run it through intake, validation, BANT scoring, and the qualification gate.</p>';
+}
+
+function runSimulation(){
+  if (running) return;
+  running = true;
+  const btn = document.getElementById("runBtn");
+  btn.disabled = true;
+  const resultArea = document.getElementById("resultArea");
+  const lead = LEADS.find(l => l.id === selectedId);
+  let i = 0;
+  renderStages(0);
+  resultArea.innerHTML = `<p class="running-text">${STAGES[0]}&hellip;</p>`;
+
+  const timer = setInterval(() => {
+    i += 1;
+    if (i >= STAGES.length){
+      clearInterval(timer);
+      const total = totalOf(lead.scores);
+      const status = statusOf(total);
+      renderStages(STAGES.length - 1);
+      resultArea.innerHTML = `
+        <div class="stamp" style="border-color:${STAMP_COLORS[status]}; color:${STAMP_COLORS[status]};">${status}</div>
+        <div class="score-line">Total score: ${total} / 100</div>
+        <div class="reason">${STAMP_REASON[status]}</div>
+      `;
+      running = false;
+      btn.disabled = false;
+    } else {
+      renderStages(i);
+      resultArea.innerHTML = `<p class="running-text">${STAGES[i]}&hellip;</p>`;
+    }
+  }, 550);
+}
+
+document.getElementById("runBtn").addEventListener("click", runSimulation);
+renderPicker();
+renderFacts();
+resetResult();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RevGuard — Revenue Accountability Engine | Adams RevOps Portfolio</title>
+<meta name="description" content="RevGuard — an AI-powered revenue accountability engine that refuses to let unverified leads enter the CRM. Built on Tally, Make.com, Pipedream, Groq, and HubSpot." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12182A; --ink-soft:#1B2338; --rule:#2A3450;
+    --paper:#ECE7D8; --paper-line:#C9C2AC; --paper-ink:#12182A;
+    --brass:#9C7A3C; --muted:#8B93A8; --body-on-ink:#B7BECF;
+    --green:#2F6B4F; --amber:#93692B; --red:#A23B2E;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--ink); color:var(--body-on-ink); font-family:'IBM Plex Sans',sans-serif; line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .stamp-font{font-family:'Special Elite',monospace;}
+
+  header{border-bottom:1px solid var(--rule); position:sticky; top:0; background:rgba(18,24,42,0.92); backdrop-filter:blur(6px); z-index:10;}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:var(--max); margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); text-decoration:none;}
+  .brand .mark{width:34px; height:34px; border:2px solid var(--brass); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--brass); font-size:11px; font-weight:700;}
+  nav.links{display:flex; gap:22px; font-size:14px;}
+  nav.links a{text-decoration:none; color:var(--body-on-ink);}
+  .btn{display:inline-block; padding:10px 18px; border-radius:3px; font-size:13px; font-weight:600; text-decoration:none; letter-spacing:.02em;}
+  .btn-primary{background:var(--paper); color:var(--ink);}
+  .btn-ghost{border:1px solid var(--rule); color:var(--body-on-ink);}
+
+  .eyebrow{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); margin-bottom:14px;}
+  section{padding:64px 0;}
+  h1{font-family:'Special Elite',monospace; font-size:clamp(32px,5vw,52px); line-height:1.12; color:var(--paper); margin:0 0 20px;}
+  h2{font-family:'Special Elite',monospace; font-size:clamp(22px,3vw,30px); color:var(--paper); margin:0 0 8px;}
+  .lede{font-size:17px; max-width:640px; color:var(--body-on-ink); margin:0 0 30px;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px;}
+
+  .stat-row{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:4px; overflow:hidden;}
+  .stat{background:var(--ink-soft); padding:18px 14px; text-align:center;}
+  .stat .num{font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--paper); font-weight:700;}
+  .stat .label{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-top:4px;}
+  @media (max-width:720px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+
+  .divider{display:flex; align-items:center; gap:14px; margin:0 0 34px;}
+  .divider .line{flex:1; height:1px; background:var(--rule);}
+  .divider span{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); white-space:nowrap;}
+
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  @media (max-width:720px){ .compare{grid-template-columns:1fr;} }
+  .compare-col h3{font-size:12px; letter-spacing:.16em; text-transform:uppercase; margin:0 0 14px;}
+  .compare-col.bad h3{color:var(--red);}
+  .compare-col.good h3{color:var(--green);}
+  .compare-col ul{list-style:none; margin:0; padding:0;}
+  .compare-col li{padding:10px 0; border-bottom:1px solid var(--rule); font-size:14.5px;}
+  .compare-col li:last-child{border-bottom:none;}
+
+  .pillars{display:flex; flex-direction:column; gap:0;}
+  .pillar{display:grid; grid-template-columns:56px 1fr; gap:20px; padding:26px 0; border-bottom:1px solid var(--rule);}
+  .pillar:last-child{border-bottom:none;}
+  .pillar .num{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--brass); border:1px solid var(--brass); border-radius:50%; width:34px; height:34px; display:flex; align-items:center; justify-content:center;}
+  .pillar h3{margin:0 0 6px; font-size:17px; color:var(--paper); font-weight:600;}
+  .pillar p{margin:0; font-size:14.5px; color:var(--body-on-ink);}
+  .pillar .tag{display:inline-block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:6px;}
+
+  .ledger{background:var(--paper); border:1px solid var(--paper-line); border-radius:3px; color:var(--paper-ink); overflow:hidden;}
+  .ledger-row{display:grid; grid-template-columns:1.4fr 2fr 0.6fr; gap:12px; padding:14px 20px; border-bottom:1px solid var(--paper-line); font-size:14px;}
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row.head{background:#DFD8BE; font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--brass); font-weight:700;}
+  .ledger-row .pts{text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700;}
+  .rubric-note{font-size:12.5px; color:var(--muted); margin-top:10px;}
+
+  .evidence-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:720px){ .evidence-grid{grid-template-columns:1fr;} }
+  .evidence-card{border:1px solid var(--rule); border-radius:4px; overflow:hidden; background:var(--ink-soft);}
+  .evidence-img{aspect-ratio:16/10; background:repeating-linear-gradient(45deg,#1B2338,#1B2338 10px,#212B45 10px,#212B45 20px); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; letter-spacing:.06em; text-transform:uppercase;}
+  .evidence-body{padding:16px 18px;}
+  .evidence-body .tag{font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--brass); margin-bottom:6px; display:block;}
+  .evidence-body p{margin:0; font-size:13.5px; color:var(--body-on-ink);}
+
+  .decisions{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:720px){ .decisions{grid-template-columns:1fr;} }
+  .decision{border-left:2px solid var(--brass); padding:4px 0 4px 18px;}
+  .decision h4{margin:0 0 8px; font-size:15px; color:var(--paper);}
+  .decision p{margin:0; font-size:13.5px; color:var(--body-on-ink);}
+
+  .tier-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:720px){ .tier-grid{grid-template-columns:1fr;} }
+  .tier{border:1px solid var(--rule); border-radius:4px; padding:24px;}
+  .tier .tag{font-size:11px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; display:block;}
+  .tier.free .tag{color:var(--green);}
+  .tier.paid .tag{color:var(--amber);}
+  .tier p{font-size:14px; color:var(--body-on-ink); margin:0 0 16px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{font-family:'JetBrains Mono',monospace; font-size:11px; padding:5px 9px; background:var(--ink); border:1px solid var(--rule); border-radius:3px; color:var(--body-on-ink);}
+
+  .cta-band{text-align:center; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:56px 0;}
+  .cta-band h2{margin-bottom:14px;}
+  .cta-band p{max-width:520px; margin:0 auto 26px; font-size:14.5px; color:var(--body-on-ink);}
+
+  footer{padding:44px 0; text-align:center;}
+  footer .name{color:var(--paper); font-weight:600; margin-bottom:6px;}
+  footer .contact{font-size:13.5px; color:var(--muted); margin-bottom:16px;}
+  footer .stack{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#top"><span class="mark">RG</span> RevGuard &mdash; Revenue Accountability Engine</a>
+    <nav class="links">
+      <a href="index.html">&larr; VelocityIQ Home</a>
+      <a href="#system">System</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#decisions">Decisions</a>
+      <a href="revguard-demo.html">Live Demo &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section id="hero">
+    <div class="wrap">
+      <div class="eyebrow">Portfolio Project &mdash; Live &amp; Deployed</div>
+      <h1>The CRM doesn&rsquo;t lie.<br>Neither does RevGuard.</h1>
+      <p class="lede">An AI-powered revenue accountability engine that refuses to let a hopeful guess &mdash; a rep&rsquo;s optimism, or an AI model&rsquo;s best-effort invention &mdash; pass as a verified fact. Nothing enters the CRM as a qualified lead unless the data behind it actually holds up.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="revguard-demo.html">&#9889; Try the Live Demo</a>
+        <a class="btn btn-ghost" href="#system">View Architecture &darr;</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num">4</div><div class="label">BANT Dimensions</div></div>
+        <div class="stat"><div class="num">3</div><div class="label">Automated Workflows</div></div>
+        <div class="stat"><div class="num">70+</div><div class="label">Auto-Qualify Threshold</div></div>
+        <div class="stat"><div class="num">$0</div><div class="label">Monthly Cost</div></div>
+        <div class="stat"><div class="num">0</div><div class="label">Fabricated Scores</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="eyebrow">The Problem</div>
+      <h2>Every pipeline eventually fills up with hope dressed as fact</h2>
+      <p class="lede">A rep needs the number, so a maybe becomes a yes. Worse: an AI model asked to score a lead's budget from nothing but a company domain will invent one anyway, because that's what language models do when a prompt demands an answer. RevGuard was built specifically to close that gap.</p>
+      <div class="divider" style="margin-top:36px;"><div class="line"></div><span>Before vs. After</span><div class="line"></div></div>
+      <div class="compare">
+        <div class="compare-col bad">
+          <h3>Without RevGuard</h3>
+          <ul>
+            <li>Budget and Authority scores inferred by AI from a bare company domain &mdash; effectively invented</li>
+            <li>Deals advance stages based on rep judgment, not confirmed data</li>
+            <li>Duplicate leads pile up silently across the CRM</li>
+            <li>Stalled deals sit untouched with no one alerted</li>
+            <li>Bad-domain or malformed submissions pollute the pipeline</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <h3>With RevGuard</h3>
+          <ul>
+            <li>Budget and Authority scored from what the lead actually stated &mdash; a lookup, not a guess</li>
+            <li>A deal cannot advance without meeting its exit criteria</li>
+            <li>Daily duplicate check flags matches by domain + normalized company name</li>
+            <li>Daily stalled-deal check alerts the sales manager automatically</li>
+            <li>Invalid submissions are quarantined before they ever reach the CRM</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="system">
+    <div class="wrap">
+      <div class="eyebrow">System Design</div>
+      <h2>Five automated checkpoints, one accountable pipeline</h2>
+      <p class="lede">Each tool handles what it does best. Make.com owns intake and validation; Pipedream owns scoring and CRM writes, where real code replaces fragile drag-and-drop formulas.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="num">1</div>
+          <div>
+            <span class="tag">Tally.so &rarr; Make.com</span>
+            <h3>Intake &amp; Validation</h3>
+            <p>A lead submits the form; Make.com checks the email domain against free consumer providers (gmail, yahoo, outlook, hotmail). Anything that fails is quarantined to a Google Sheet with a Slack alert &mdash; never silently dropped.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="num">2</div>
+          <div>
+            <span class="tag">Pipedream &rarr; Groq</span>
+            <h3>BANT Scoring</h3>
+            <p>Budget and Authority are scored from the lead's own stated answers via a direct lookup table &mdash; no AI guessing involved. Need and Timeline are read by Groq's Llama 3.3 model, but only from what the lead actually wrote.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="num">3</div>
+          <div>
+            <span class="tag">Pipedream &rarr; HubSpot</span>
+            <h3>Qualification Gate</h3>
+            <p>Total &ge;70 creates a contact and a deal in the Qualification stage. 40&ndash;69 creates a contact routed to Nurture. Below 40, the contact is logged and flagged &mdash; disqualified, not discarded.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="num">4</div>
+          <div>
+            <span class="tag">Pipedream, daily</span>
+            <h3>Stalled Deal Detection</h3>
+            <p>A scheduled workflow checks every open deal's last-activity date. Anything untouched 7+ days triggers a Slack alert to the sales manager &mdash; before the deal quietly dies.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="num">5</div>
+          <div>
+            <span class="tag">Pipedream, daily</span>
+            <h3>Duplicate Detection</h3>
+            <p>A second scheduled workflow matches contacts on email domain plus a normalized company name. Matches are flagged for human review &mdash; never auto-merged, since a wrong merge is worse than a visible duplicate.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rubric">
+    <div class="wrap">
+      <div class="eyebrow">The Rubric</div>
+      <h2>BANT scoring, in full</h2>
+      <p class="lede">The part most conceptual designs leave as a black box. Here's exactly what RevGuard checks.</p>
+      <div class="ledger">
+        <div class="ledger-row head"><span>Dimension</span><span>Scored from</span><span class="pts">Points</span></div>
+        <div class="ledger-row"><span>Budget</span><span>Stated budget range &mdash; direct lookup: $50k+ = 25, $10k&ndash;$50k = 15, Not sure yet = 5</span><span class="pts">0&ndash;25</span></div>
+        <div class="ledger-row"><span>Authority</span><span>Stated decision role &mdash; direct lookup: I decide = 25, I influence = 15, Just researching = 5</span><span class="pts">0&ndash;25</span></div>
+        <div class="ledger-row"><span>Need</span><span>Groq reads the stated problem for specificity and urgency</span><span class="pts">0&ndash;25</span></div>
+        <div class="ledger-row"><span>Timeline</span><span>Groq reads the stated purchase timeframe</span><span class="pts">0&ndash;25</span></div>
+      </div>
+      <p class="rubric-note">&ge;70 total = Auto-Qualified, deal created. 40&ndash;69 = Nurture, contact only. &lt;40 = Disqualified, logged with reason. No dimension is ever left to guesswork.</p>
+    </div>
+  </section>
+
+  <section id="evidence">
+    <div class="wrap">
+      <div class="eyebrow">Build Evidence</div>
+      <h2>Built &amp; tested in production</h2>
+      <p class="lede">Every screenshot below is from the live system running real test leads through the full pipeline.</p>
+      <div class="evidence-grid">
+        <div class="evidence-card">
+          <div class="evidence-img">Tally intake form</div>
+          <div class="evidence-body"><span class="tag">Layer 1 — Intake</span><p>RevGuard Lead Intake form on Tally.so, including the stated Budget and Authority fields that replaced AI-guessed values.</p></div>
+        </div>
+        <div class="evidence-card">
+          <div class="evidence-img">Make.com scenario, all green</div>
+          <div class="evidence-body"><span class="tag">Layer 1 — Validation</span><p>Make.com scenario routing valid leads to Pipedream and invalid ones to the Quarantine sheet + Slack alert.</p></div>
+        </div>
+        <div class="evidence-card">
+          <div class="evidence-img">Pipedream scoring step output</div>
+          <div class="evidence-body"><span class="tag">Layer 2 — Scoring</span><p>Node.js code step output: budget 25, authority 25, need 20, timeline 20, total 90, status Auto-Qualified.</p></div>
+        </div>
+        <div class="evidence-card">
+          <div class="evidence-img">HubSpot contact, BANT fields populated</div>
+          <div class="evidence-body"><span class="tag">Layer 3 — CRM Write</span><p>Live HubSpot contact record showing all six custom RevGuard properties populated from the scoring run.</p></div>
+        </div>
+        <div class="evidence-card">
+          <div class="evidence-img">HubSpot deal, linked to contact</div>
+          <div class="evidence-body"><span class="tag">Layer 3 — Deal Creation</span><p>Deal created in the Qualification stage, correctly associated with its contact via the HubSpot API.</p></div>
+        </div>
+        <div class="evidence-card">
+          <div class="evidence-img">Slack alerts, three channels</div>
+          <div class="evidence-body"><span class="tag">Layers 4 &amp; 5 — Alerts</span><p>#revguard-quarantine, #revguard-stalled-deals, and #revguard-duplicates firing on real triggered events.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="decisions">
+    <div class="wrap">
+      <div class="eyebrow">Engineering Decisions</div>
+      <h2>Why it's built this way</h2>
+      <div class="decisions">
+        <div class="decision">
+          <h4>Why Budget and Authority aren't AI-scored</h4>
+          <p>An early version asked the model to infer budget from a company domain alone. It complied &mdash; by inventing a number. That's the exact failure this system exists to prevent, so both fields now come from a direct lookup against what the lead actually stated.</p>
+        </div>
+        <div class="decision">
+          <h4>Why scoring logic moved to Pipedream, not Make.com</h4>
+          <p>Make.com's drag-and-drop filter formulas repeatedly mis-evaluated a four-value sum. Moving the math into real Node.js code in Pipedream made the logic testable, debuggable, and reliable &mdash; the right tool for arithmetic and conditional branching.</p>
+        </div>
+        <div class="decision">
+          <h4>Why duplicates are flagged, not auto-merged</h4>
+          <p>At this tier, there's no paid tool's audit trail to safely undo a bad automatic merge. Flagging for a human to review costs a little time; a wrong auto-merge destroys data. The safer default wins.</p>
+        </div>
+        <div class="decision">
+          <h4>Why this runs across two Pipedream accounts</h4>
+          <p>Pipedream's free tier caps active deployed workflows at three per account. With another portfolio project already using three slots, RevGuard runs in a second free account rather than upgrading &mdash; a real, documented constraint of building on genuinely free tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <div class="wrap">
+      <div class="eyebrow">Two-Tier Build</div>
+      <h2>What's running now vs. what upgrades on a signed client</h2>
+      <div class="tier-grid">
+        <div class="tier free">
+          <span class="tag">Tier 1 — running now, 100% free</span>
+          <p>Tally &rarr; Make.com validation &amp; quarantine &rarr; Pipedream (Node.js) &rarr; Groq scoring &rarr; HubSpot Free CRM, with daily stalled-deal and duplicate-detection checks.</p>
+          <div class="chip-row">
+            <span class="chip">Tally.so</span><span class="chip">Make.com</span><span class="chip">Pipedream</span><span class="chip">Groq</span><span class="chip">HubSpot Free</span><span class="chip">Slack</span>
+          </div>
+        </div>
+        <div class="tier paid">
+          <span class="tag">Tier 2 — documented, client-triggered</span>
+          <p>HubSpot Sales Hub, Apollo.io enrichment, automated deduplication with an audit trail, and sub-minute polling &mdash; activated once a paying client signs on, not before.</p>
+          <div class="chip-row">
+            <span class="chip">HubSpot Sales Hub</span><span class="chip">Apollo.io</span><span class="chip">Insycle / RingLead</span><span class="chip">Make.com paid</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>See it stamp a lead live</h2>
+      <p>Pick a real test lead and watch it move through intake, scoring, and the qualification gate &mdash; the same engine running in production.</p>
+      <a class="btn btn-primary" href="revguard-demo.html">&#9889; Try the Live Demo</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="name">Built by Adams &mdash; Marketing &amp; Revenue Operations Specialist</div>
+    <div class="contact">jasonadams.emailmarketing@gmail.com &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/jasonadams-email">linkedin.com/in/jasonadams-email</a></div>
+    <div class="stack">Stack: Tally.so &middot; Make.com &middot; Pipedream &middot; Groq (Llama 3.3) &middot; HubSpot &middot; Slack</div>
+  </div>
+</footer>
+
+</body>
+</html>

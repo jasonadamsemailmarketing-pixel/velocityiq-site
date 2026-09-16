@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solutions & Pricing — VelocityIQ Revenue Systems</title>
+<meta name="description" content="Free lead-response audit, a $497 fixed-price fix, or a custom-built revenue accountability engine. See exactly what's included at each tier." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12182A; --ink-soft:#1B2338; --rule:#2A3450;
+    --paper:#ECE7D8; --paper-line:#C9C2AC; --paper-ink:#12182A;
+    --brass:#9C7A3C; --muted:#8B93A8; --body-on-ink:#B7BECF;
+    --green:#2F6B4F; --amber:#93692B; --red:#A23B2E;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--ink); color:var(--body-on-ink); font-family:'IBM Plex Sans',sans-serif; line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{border-bottom:1px solid var(--rule); position:sticky; top:0; background:rgba(18,24,42,0.94); backdrop-filter:blur(6px); z-index:10;}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:var(--max); margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--paper); text-decoration:none; font-weight:600;}
+  .brand .mark{width:34px; height:34px; border:2px solid var(--brass); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--brass); font-size:11px; font-weight:700;}
+  nav.links{display:flex; gap:22px; font-size:14px; align-items:center;}
+  nav.links a{text-decoration:none; color:var(--body-on-ink);}
+  .btn{display:inline-block; padding:12px 22px; border-radius:3px; font-size:14px; font-weight:700; text-decoration:none; letter-spacing:.02em;}
+  .btn-primary{background:var(--brass); color:var(--ink);}
+  .btn-ghost{border:1px solid var(--rule); color:var(--body-on-ink);}
+
+  .eyebrow{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); margin-bottom:14px;}
+  section{padding:60px 0;}
+  h1{font-family:'Special Elite',monospace; font-size:clamp(30px,4.6vw,46px); line-height:1.14; color:var(--paper); margin:0 0 18px;}
+  h2{font-family:'Special Elite',monospace; font-size:clamp(22px,3vw,28px); color:var(--paper); margin:0 0 10px;}
+  .lede{font-size:16px; max-width:640px; color:var(--body-on-ink); margin:0 0 20px;}
+
+  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:900px){ .pricing-grid{grid-template-columns:1fr;} }
+  .price-card{border:1px solid var(--rule); border-radius:6px; padding:28px; background:var(--ink-soft); display:flex; flex-direction:column;}
+  .price-card.featured{border-color:var(--brass); background:#1E2540;}
+  .price-card .tag{font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--brass); margin-bottom:10px;}
+  .price-card .amount{font-family:'JetBrains Mono',monospace; font-size:30px; color:var(--paper); margin-bottom:6px; font-weight:700;}
+  .price-card .desc{font-size:13.5px; color:var(--body-on-ink); margin-bottom:20px;}
+  .price-card ul{list-style:none; margin:0 0 22px; padding:0;}
+  .price-card li{font-size:13px; padding:7px 0; border-bottom:1px solid var(--rule); color:var(--body-on-ink);}
+  .price-card li:last-child{border-bottom:none;}
+  .price-card .btn{text-align:center;}
+
+  .detail-block{border-top:1px solid var(--rule); padding-top:30px; margin-top:14px;}
+  .detail-block h3{font-size:17px; color:var(--paper); margin:0 0 10px; font-weight:600;}
+  .detail-block p{font-size:14px; color:var(--body-on-ink); margin:0 0 8px;}
+  .detail-block ul{margin:8px 0 0; padding-left:20px;}
+  .detail-block li{font-size:13.5px; color:var(--body-on-ink); margin-bottom:6px;}
+
+  .faq-item{border-bottom:1px solid var(--rule); padding:22px 0;}
+  .faq-item:last-child{border-bottom:none;}
+  .faq-item h4{margin:0 0 8px; font-size:15.5px; color:var(--paper); font-weight:600;}
+  .faq-item p{margin:0; font-size:13.5px; color:var(--body-on-ink);}
+
+  .final-cta{text-align:center; border-top:1px solid var(--rule); padding:56px 0; background:var(--ink-soft);}
+  .final-cta h2{margin-bottom:14px;}
+  .final-cta p{max-width:520px; margin:0 auto 26px; font-size:15px; color:var(--body-on-ink);}
+
+  footer{padding:44px 0; text-align:center;}
+  footer .name{color:var(--paper); font-weight:600; margin-bottom:6px;}
+  footer .contact{font-size:13.5px; color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="index.html"><span class="mark">V</span> VelocityIQ Revenue Systems</a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="case-studies.html">Case Studies</a>
+      <a class="btn btn-primary" href="index.html#audit-form">Request Free Audit</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Solutions &amp; Pricing</div>
+      <h1>Start free. Pay only for what's actually broken.</h1>
+      <p class="lede">No retainers, no long contracts. You see the real problem before you spend a dollar, and every price after that is fixed and scoped, not open-ended.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="tag">Step one</div>
+          <div class="amount">Free</div>
+          <div class="desc">Lead-response &amp; CRM integrity audit. A real diagnostic, not a sales call in disguise.</div>
+          <ul>
+            <li>Response-time trace</li>
+            <li>Qualification gap check</li>
+            <li>Duplicate &amp; stalled-deal scan</li>
+            <li>Written findings report, 3&ndash;4 business days</li>
+          </ul>
+          <a class="btn btn-ghost" href="index.html#audit-form">Request the audit</a>
+        </div>
+        <div class="price-card featured">
+          <div class="tag">Most common fix</div>
+          <div class="amount">From $497</div>
+          <div class="desc">A single, well-scoped fix for the highest-leverage issue the audit finds.</div>
+          <ul>
+            <li>Fixed price after audit, no surprises</li>
+            <li>Built on tools you already use where possible</li>
+            <li>Delivered with documentation</li>
+          </ul>
+          <a class="btn btn-primary" href="index.html#audit-form">Start with the audit</a>
+        </div>
+        <div class="price-card">
+          <div class="tag">Full build</div>
+          <div class="amount">Custom quote</div>
+          <div class="desc">A complete accountability system like RevGuard, built around your CRM and workflow.</div>
+          <ul>
+            <li>Free-tier build available first, if useful</li>
+            <li>Clear upgrade path as you scale</li>
+            <li>Ongoing support option</li>
+          </ul>
+          <a class="btn btn-ghost" href="index.html#audit-form">Discuss a build</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">What's Actually Included</div>
+      <h2>A closer look at each tier</h2>
+
+      <div class="detail-block">
+        <h3>The Free Audit</h3>
+        <p>You answer questions about your current CRM, lead volume, and response times. If you're comfortable granting temporary read-only CRM access, we go deeper — tracing real response-time patterns, spot-checking qualification data, and scanning for duplicate or stalled records.</p>
+        <ul>
+          <li>Turnaround: 3&ndash;4 business days</li>
+          <li>Deliverable: a one-page, plain-language findings report</li>
+          <li>No obligation — the report is yours even if you never hire us for anything else</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <h3>The $497 Fix</h3>
+        <p>Once the audit identifies the single highest-leverage problem — usually a broken automation, a missing qualification gate, or a duplicate/stalled-deal blind spot — we quote a fixed price to fix that one thing.</p>
+        <ul>
+          <li>Scope is locked before work starts — no scope creep, no hourly surprises</li>
+          <li>Built inside your existing CRM and tools wherever possible</li>
+          <li>You get documentation explaining exactly what was changed and why</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <h3>The Full Build</h3>
+        <p>For companies that need a complete revenue accountability system — real BANT-style qualification scoring, automated stalled-deal detection, duplicate flagging, all wired into your CRM. RevGuard is the live proof of what this looks like.</p>
+        <ul>
+          <li>Starts on a free-tier stack if useful for validating the build first</li>
+          <li>Clear, documented upgrade path once volume or needs grow</li>
+          <li>Optional ongoing support and monitoring</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Common Questions</div>
+      <h2>Frequently asked</h2>
+
+      <div class="faq-item">
+        <h4>Do I have to give you CRM access?</h4>
+        <p>No. The audit runs from your form answers either way. Access lets us go deeper and be more specific, but it's never required to get a findings report.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What if the audit finds nothing worth fixing?</h4>
+        <p>Then we tell you that, plainly. You keep the report, we don't manufacture a problem to justify a sale.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is the $497 fix a one-time flat cost, always?</h4>
+        <p>$497 is the typical starting point for a single, well-scoped issue. If the audit uncovers something larger, you'll get a custom quote before any work begins — never a surprise invoice.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How is this different from hiring a RevOps agency?</h4>
+        <p>No retainer, no discovery-call sales funnel. You get a real diagnostic first, for free, and only pay once you know exactly what you're paying to fix.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What CRMs do you work with?</h4>
+        <p>HubSpot, Pipedrive, and Salesforce most commonly. If you're on something else, mention it in the audit form — most fixes are CRM-agnostic in principle.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta" id="audit-form">
+    <div class="wrap">
+      <div class="eyebrow">Get Started</div>
+      <h2>Request your free audit.</h2>
+      <p>Five minutes to tell us about your setup. We'll come back with a plain-language report — worth having even if you never hire us to fix anything.</p>
+      <a class="btn btn-primary" href="https://tally.so/r/ob8DDV" target="_blank" rel="noopener">Request Your Free Audit &rarr;</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="name">VelocityIQ Revenue Systems</div>
+    <div class="contact">jasonadams.emailmarketing@gmail.com &nbsp;&middot;&nbsp; <a href="https://linkedin.com/in/jasonadams-email">linkedin.com/in/jasonadams-email</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
